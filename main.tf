@@ -26,7 +26,7 @@ data "aws_vpc" "vpc" {
 module "webserver" {
   source                    = "./webserver"
   azs                       = "${var.azs}"
-  subnet_ids            = var.subnet_ids
+  subnet_ids                = var.subnet_ids
   vpc_id                    = "${data.aws_vpc.vpc.id}"
   vpc_cidr                  = "${data.aws_vpc.vpc.cidr_block}"
   s3_bucket                 = var.s3_bucket

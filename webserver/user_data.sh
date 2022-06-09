@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-# Make sure that the AIM is Amazon Linux 2
+# Make sure that the AMI is Amazon Linux 2
 amazon-linux-extras install ansible2=2.8 -y
 yum install -y zip unzip
 
