@@ -1,0 +1,41 @@
+---
+
+- name: Bits Server
+  hosts: all
+  become: true
+  become_method: sudo
+  vars:
+    temp_dir: /tmp/devops
+    environment: "{{ lookup('env','ENVIRONMENT') }}"
+    
+  environment:
+    PATH: /usr/local/bin/:{{ ansible_env.PATH }}
+
+  tasks:
+  - name: Update all packages
+    command: yum update -y
+
+  - name: Load needed packages
+    yum:
+      name: wget,python-pip,nmap
+      state: present
+
+  - name: Allow HTTP Connections
+    iptables:
+      chain: INPUT
+      protocol: tcp
+      destination_port: 80
+      ctstate: NEW
+      syn: match
+      jump: ACCEPT
+      comment: Allow HTTP Connections
+
+  - name: Allow HTTPS Connections
+    iptables:
+      chain: INPUT
+      protocol: tcp
+      destination_port: 443
+      ctstate: NEW
+      syn: match
+      jump: ACCEPT
+      comment: Allow HTTPS Connections

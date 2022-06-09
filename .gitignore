@@ -1,0 +1,4 @@
+.terraform
+terraform.tfstate*
+ansible_script.zip
+.terraform.lock.hcl

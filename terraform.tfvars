@@ -1,0 +1,7 @@
+environment        = "Production"
+azs                = "us-east-1b,us-east-1a"
+subnet_ids         = "subnet-ID1,subnet-ID2"
+key_pair           = "your-key-pair-for-ssh"
+ami                = "ami-00e5686cf2d27bcec"
+vpc_id             = "vpc-ID" 
+s3_bucket          = "s3-for-terraform-remote-state"
