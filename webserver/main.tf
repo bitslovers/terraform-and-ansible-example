@@ -12,7 +12,7 @@ resource "random_shuffle" "sni" {
   result_count = 1
 }
 
-resource "aws_instance" "inst" {
+resource "aws_instance" "web" {
   ami                    = var.ami
   instance_type          = var.instance_type
   vpc_security_group_ids = ["${aws_security_group.inst.id}"]
@@ -47,3 +47,28 @@ resource "aws_s3_bucket_object" "ansible_script" {
   source = "ansible_script.zip"
   etag   = "${data.archive_file.ansible_script.output_md5}"
 }
+
+
+#### Example How make your local/pipeline/terraform to execute Ansible
+# resource "aws_instance" "web" {
+
+#   provisioner "remote-exec" {
+#     # Install Python for Ansible Or use userdata.sh for it.
+#     inline = ["cat /etc/os-release || true",
+#       "cat /etc/system-release || true",
+#     ]
+  
+#     connection {
+#       type        = "ssh"
+#       user        = "ec2-user"
+#       host        = "${self.private_ip}"
+#       private_key = "${file(var.ssh_key_private)}"
+      
+#     }
+#   }
+  
+#   provisioner "local-exec" {
+#     command = "ansible-playbook -u ec2-user -i '${self.private_ip},' --private-key ${var.ssh_key_private} -T 600 \"${path.module}/ansible_script/provision.yml\""
+#   }
+# }
+
